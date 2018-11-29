@@ -120,35 +120,6 @@ open class UIEditableImageView: UIImageView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func hasFilterApplied() -> Bool {
-        return brightnessFilter.brightness != 0
-    }
-    
-    func editedImage() -> UIImage? {
-        guard let outputImage = outputImage else { return nil }
-        do {
-            guard let cgImage = try self.context?.makeCGImage(from: outputImage) else { return nil }
-            return UIImage(cgImage: cgImage)
-        } catch {
-            print(error)
-            return nil
-        }
-        
-    }
-    
-    public func applyFilter(_ filter: MTIUnaryFilter?) -> Bool {
-        self.renderView.isPaused = false
-        appliedFilter = filter
-        return true
-    }
-    
-    func reset() {
-        applyFilter(nil)
-        brightness = MTIBrightnessFilter.defaultValue
-        saturation = MTISaturationFilter.defaultValue
-        contrast = MTIContrastFilter.defaultValue
-    }
 }
 
 extension UIEditableImageView: MTKViewDelegate {
